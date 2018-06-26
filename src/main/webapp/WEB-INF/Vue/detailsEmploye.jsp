@@ -61,9 +61,9 @@
                             <div class="col-sm-10">
                                 <input type="text" name="frmAdresse" value="${employe.adresse}"   class="form-control">
                             </div>
-                            </div>
+                        </div>
 
-                            <div class="form-group">
+                        <div class="form-group">
                             <label class="col-sm-2 control-label" for="textinput">Code postal</label>
                             <div class="col-sm-10">
                                 <input type="text" name="frmCodePostal" value="${employe.codepostal}" class="form-control">
@@ -87,11 +87,13 @@
                                 <div class="pull-right">
                                     <button type="submit" name="action" value="Modifier" class="btn btn-primary">Modifier</button>
                                     <button type="submit" name="action" value="Voir Liste" class="btn btn-default" >Voir liste</button>
+                                   
                                 </div>
                             </div>
                         </div>
 
                     </fieldset>
+
                 </form>
             </div>
         </div>

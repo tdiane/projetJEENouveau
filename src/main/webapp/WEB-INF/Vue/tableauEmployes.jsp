@@ -53,35 +53,36 @@
                         </c:forEach>
 
                     </table>
-                       
-                    
+
+
                     <c:if test="${!empty CLE_TEST_SUPPRIMER_SUCCES}">
-                    <font color="green">${CLE_TEST_SUPPRIMER_SUCCES}</font> 
-                    <br>
-                     </c:if>
-                    
-                      
-                    <c:if test="${!empty CLE_TEST_SUPPRIMER_ECHEC}">
-                    <font color="red">${CLE_TEST_SUPPRIMER_ECHEC}</font> 
-                    <br>
-                     </c:if>
-                   
-                    
-                    
-                    <c:if test="${!empty cleListeEmployes}">
-                     
-                    <input type="submit" name="action" value="Supprimer" class="btn btn-primary"/>
-                    <input type="submit" name="action" value="Details" class="btn btn-primary"/>
+                        <font color="green">${CLE_TEST_SUPPRIMER_SUCCES}</font> 
+                        <br>
                     </c:if>
-                    
+
+
+                    <c:if test="${!empty CLE_TEST_SUPPRIMER_ECHEC}">
+                        <font color="red">${CLE_TEST_SUPPRIMER_ECHEC}</font> 
+                        <br>
+                    </c:if>
+
+
+
+                    <c:if test="${!empty cleListeEmployes}">
+
+                        <input type="submit" name="action" value="Supprimer" class="btn btn-primary"/>
+                        <input type="submit" name="action" value="Details" class="btn btn-primary"/>
+                    </c:if>
+
                     <c:if test="${empty cleListeEmployes}">
                         <font color="blue">L'entreprise doit recruter !</font>
                         <br>
                         <br>
                         <input type="submit" name="action" value="Créer 5 Employés" class="btn btn-primary"/>
-                                            </c:if>
-                        
-             
+                    </c:if>
+
+                        <br/><font color="${couleur}"> ${message_ajouter};</font>
+
                 </form>
             </div>
         </div>         

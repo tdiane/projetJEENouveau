@@ -120,7 +120,6 @@ public class Controleur extends HttpServlet {
                         }
                     }
                     break;
-  
 
                 case EmployesConstantes.ACTION_SUPPRIMER:
                     if (request.getParameter(idEmploye) != null) {
@@ -146,7 +145,7 @@ public class Controleur extends HttpServlet {
                     break;
 
                 case EmployesConstantes.ACTION_MODIFIER:
-                    
+
                     //employe = (EmployeBean) session.getAttribute("employe");
                     int idEmp = (Integer) session.getAttribute("idEmp");
 
@@ -212,19 +211,26 @@ public class Controleur extends HttpServlet {
                             request.getParameter(EmployesConstantes.CHAMP_CODEPOSTAL),
                             request.getParameter(EmployesConstantes.CHAMP_VILLE),
                             request.getParameter(EmployesConstantes.CHAMP_EMAIL));
-
-                    emEmploye.ajouterEmploye(employe);
-
-                    listeEmployes.clear();
-                    listeEmployes.addAll(emEmploye.getEmployes());
-                    request.setAttribute("cleListeEmployes", listeEmployes);
-                    request.getRequestDispatcher(EmployesConstantes.PAGE_TOUS_LES_EMPLOYES).forward(request, response);
+                  
+                    boolean test = emEmploye.ajouterEmploye(employe);
+                    
+                    if (test) {
+                        listeEmployes.clear();
+                        listeEmployes.addAll(emEmploye.getEmployes());
+                        request.setAttribute("cleListeEmployes", listeEmployes);
+                        request.setAttribute("message_ajouter", EmployesConstantes.SUCCES_AJOUTER);
+                        request.setAttribute("couleur", "green");
+                        request.getRequestDispatcher(EmployesConstantes.PAGE_TOUS_LES_EMPLOYES).forward(request, response);
+                    } else {
+                        request.setAttribute("message_ajouter", EmployesConstantes.ERREUR_AJOUTER);
+                    }
+                    request.setAttribute("couleur", "red");
+                    request.getRequestDispatcher(EmployesConstantes.PAGE_AJOUT_EMPLOYE).forward(request, response);
                     break;
 
                 case EmployesConstantes.ACTION_CREER_EMPLOYES:
- 
-                    emEmploye.recruterEmployes(employe1);
 
+                    emEmploye.recruterEmployes(employe1);
 
                     listeEmployes.clear();
                     listeEmployes.addAll(emEmploye.getEmployes());

@@ -22,11 +22,10 @@ public class EmployeSB {
     private EntityManager em;
 
     public Collection<Employe> getEmployes() {
-        
+
         // Exécution d'une requête équivalente à un select *  
         //Query q = em.createQuery("select e from Employe e");
         //return q.getResultList();
-
         Query findAllQuery = em.createNamedQuery("recupererTousLesEmployes");
         return findAllQuery.getResultList();
 
@@ -40,11 +39,11 @@ public class EmployeSB {
         q.executeUpdate();
 
     }
-    
-    public void ajouterEmploye(Employe empl){
-        
+
+    public boolean ajouterEmploye(Employe empl) {
+        boolean test = false;
         Employe employe = new Employe();
-              
+
         employe.setPrenom(empl.getPrenom());
         employe.setNom(empl.getNom());
         employe.setAdresse(empl.getAdresse());
@@ -54,15 +53,20 @@ public class EmployeSB {
         employe.setTelport(empl.getTelport());
         employe.setTelpro(empl.getTelpro());
         employe.setVille(empl.getVille());
+        if (empl.getNom().length() < 25 && empl.getPrenom().length() < 25 && empl.getAdresse().length() < 100 && empl.getCodepostal().length() < 15 && empl.getEmail().length() < 35 && empl.getTeldom().length() < 15 && empl.getTelport().length() < 15 && empl.getTelpro().length() < 15 && empl.getVille().length() < 25 &&
+               ( !empl.getNom().equals("") ||!empl.getPrenom().equals("") || !empl.getEmail().equals(("")) )) {
+            test = true;
+            this.persist(employe);
 
-        this.persist(employe);
-  
+        }
+        return test;
+
     }
-    
-    public void recruterEmployes(Employe emp){
-        
+
+    public void recruterEmployes(Employe emp) {
+
         Employe employe1 = new Employe();
-        
+
         employe1.setPrenom("Homer");
         employe1.setNom("Simpson");
         employe1.setAdresse("2 avenue Duff");
@@ -72,10 +76,9 @@ public class EmployeSB {
         employe1.setTelport("0612345678");
         employe1.setTelpro("0698765432");
         employe1.setVille("Colombes");
-        
-                 
+
         Employe employe2 = new Employe();
-        
+
         employe2.setPrenom("Mafalda");
         employe2.setNom("Querida");
         employe2.setAdresse("6 rue de Buenos Aires");
@@ -85,9 +88,9 @@ public class EmployeSB {
         employe2.setTelport("0612345678");
         employe2.setTelpro("0698765432");
         employe2.setVille("Paris");
-  
+
         Employe employe3 = new Employe();
-        
+
         employe3.setPrenom("Gaston");
         employe3.setNom("Lagaffe");
         employe3.setAdresse("10 rue des Rebelles");
@@ -97,9 +100,9 @@ public class EmployeSB {
         employe3.setTelport("0612345678");
         employe3.setTelpro("0698765432");
         employe3.setVille("Colombes");
-        
+
         Employe employe4 = new Employe();
-        
+
         employe4.setPrenom("Woody");
         employe4.setNom("Woodpecker");
         employe4.setAdresse("5 bvd des Picoreurs");
@@ -109,9 +112,9 @@ public class EmployeSB {
         employe4.setTelport("0612345678");
         employe4.setTelpro("0698765432");
         employe4.setVille("Dijon");
-        
+
         Employe employe5 = new Employe();
-        
+
         employe5.setPrenom("Charlie");
         employe5.setNom("Brown");
         employe5.setAdresse("140 avenue Foche");
@@ -121,21 +124,19 @@ public class EmployeSB {
         employe5.setTelport("0612345678");
         employe5.setTelpro("0698765432");
         employe5.setVille("Nanterre");
- 
+
         this.persist(employe1);
         this.persist(employe2);
         this.persist(employe3);
         this.persist(employe4);
         this.persist(employe5);
-        
+
     }
-  
-    
 
     public void modifierEmploye(Employe empl) {
 
         Employe employe = (Employe) em.find(Employe.class, empl.getId());
-        
+
         employe.setPrenom(empl.getPrenom());
         employe.setNom(empl.getNom());
         employe.setAdresse(empl.getAdresse());
@@ -151,27 +152,23 @@ public class EmployeSB {
     }
 
     public Employe getEmployeParId(int id) {
-        
+
         Query findById = em.createQuery("SELECT e FROM Employe e WHERE e.id = :idEmp");
         findById.setParameter("idEmp", id);
         Employe empl = (Employe) findById.getSingleResult();
         return empl;
-        
+
     }
-    
-    
-        public Collection<Identifiants> getIdentifiants() {
-        
+
+    public Collection<Identifiants> getIdentifiants() {
+
         // Exécution d'une requête équivalente à un select *  
         //Query q = em.createQuery("select e from Employe e");
         //return q.getResultList();
-
         Query findAllQuery = em.createNamedQuery("recupererLesIdentifiants");
         return findAllQuery.getResultList();
 
     }
-        
-        
 
     public void persist(Object object) {
         em.persist(object);

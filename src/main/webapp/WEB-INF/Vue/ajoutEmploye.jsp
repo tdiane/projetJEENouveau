@@ -19,7 +19,7 @@
             <div class="col-md-6 col-md-offset-2">
                 <form class="form-horizontal" action="Controleur" method="POST">
                     <fieldset>
-                        
+
                         <legend>Ajouter un employé</legend>
 
                         <div class="form-group">
@@ -62,9 +62,9 @@
                             <div class="col-sm-10">
                                 <input type="text" name="frmAdresse" value=""   class="form-control">
                             </div>
-                            </div>
+                        </div>
 
-                            <div class="form-group">
+                        <div class="form-group">
                             <label class="col-sm-2 control-label" for="textinput">Code postal</label>
                             <div class="col-sm-10">
                                 <input type="text" name="frmCodePostal" value="" class="form-control">
@@ -90,10 +90,10 @@
                                 </div>
                             </div>
                         </div>
-
+                        <br/><font color="${couleur}"> ${message_ajouter};</font>
                     </fieldset>
                 </form>
             </div>
         </div>
-</body>
+    </body>
 </html>
