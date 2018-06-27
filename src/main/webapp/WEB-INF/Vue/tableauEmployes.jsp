@@ -65,8 +65,9 @@
                         <font color="blue">L'entreprise doit recruter !</font>
                         <br>
                         <br>
-                        <input type="submit" name="action" value="Créer 5 Employés" class="btn btn-primary"/>
-                    </c:if>
+                                    <button id="a" type="submit" name="action" value="Créer 5 Employés" class="btn btn-primary" onclick="function disableBtn()">Ajouter 5 employés</button>
+
+                        </c:if>
 
                     <input type="submit" name="action" value="Ajouter" class="btn btn-primary"/>
 
@@ -78,4 +79,12 @@
             </div>
         </div>         
     </body>
+    <script type="text/javascript">
+        var btn = document.getElementById('a');
+
+        btn.addEventListener('click', disableBtn);
+
+        function disableBtn() {
+            window.setTimeout(function () { btn.disabled = true;}, 0);
+        }</script>
 </html>
