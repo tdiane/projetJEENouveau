@@ -80,8 +80,11 @@
                         <br>
                         <input type="submit" name="action" value="Créer 5 Employés" class="btn btn-primary"/>
                     </c:if>
+                        
+                    <input type="submit" name="action" value="Ajouter" class="btn btn-primary"/>
 
-                        <br/><font color="${couleur}"> ${message_ajouter};</font>
+                    <br/><font color="${couleur}"> ${message_ajouter}</font>
+                    <br/><font color="${couleur}"> ${message_details}</font>
 
                 </form>
             </div>

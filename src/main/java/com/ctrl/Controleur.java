@@ -184,6 +184,14 @@ public class Controleur extends HttpServlet {
                         session.setAttribute("employe", employe);
                         request.getRequestDispatcher(EmployesConstantes.PAGE_DETAIL_EMPLOYE).forward(request, response);
 
+                    } else {
+
+                        listeEmployes.clear();
+                        listeEmployes.addAll(emEmploye.getEmployes());
+                        request.setAttribute("cleListeEmployes", listeEmployes);
+                        request.setAttribute("couleur", "red");
+                        request.setAttribute("message_details", EmployesConstantes.ERREUR_DETAILS);
+                        request.getRequestDispatcher(EmployesConstantes.PAGE_TOUS_LES_EMPLOYES).forward(request, response);
                     }
                     break;
 
@@ -211,9 +219,9 @@ public class Controleur extends HttpServlet {
                             request.getParameter(EmployesConstantes.CHAMP_CODEPOSTAL),
                             request.getParameter(EmployesConstantes.CHAMP_VILLE),
                             request.getParameter(EmployesConstantes.CHAMP_EMAIL));
-                  
+
                     boolean test = emEmploye.ajouterEmploye(employe);
-                    
+
                     if (test) {
                         listeEmployes.clear();
                         listeEmployes.addAll(emEmploye.getEmployes());

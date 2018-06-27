@@ -86,7 +86,7 @@
                         <div class="form-group">
                             <div class="col-sm-offset-2 col-sm-10">
                                 <div class="pull-right">
-                                    <button type="submit" name="action" value="Ajouter Employe" class="btn btn-primary">Ajouter l'employé</button>
+                                    <button id="a" type="submit" name="action" value="Ajouter Employe" class="btn btn-primary" onclick="function disableBtn()">Ajouter l'employé</button>
                                 </div>
                             </div>
                         </div>
@@ -96,4 +96,12 @@
             </div>
         </div>
     </body>
+      <script type="text/javascript">
+        var btn = document.getElementById('a');
+
+        btn.addEventListener('click', disableBtn);
+
+        function disableBtn() {
+            window.setTimeout(function () { btn.disabled = true;}, 0);
+        }</script>
 </html>
