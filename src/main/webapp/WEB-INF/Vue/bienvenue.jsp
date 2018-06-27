@@ -1,7 +1,7 @@
 <%-- 
     Document   : bienvenue
     Created on : 19 juin 2018, 14:51:09
-    Author     : esic
+    Author     : rive droite
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>

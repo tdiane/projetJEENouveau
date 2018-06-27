@@ -17,14 +17,13 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author Jacques
  */
 @Entity
 @XmlRootElement
 @Table(name = "EMPLOYES")
 @NamedQueries(
         {
-            @NamedQuery(name = "recupererTousLesEmployes", query = "SELECT e FROM Employe e")
+              @NamedQuery(name = "recupererTousLesEmployes", query = "SELECT e FROM Employe e")
             , @NamedQuery(name = "Employe.findById", query = "SELECT e FROM Employe e WHERE e.id = :id")
             , @NamedQuery(name = "Employe.findByNom", query = "SELECT e FROM Employe e WHERE e.nom = :nom")
             , @NamedQuery(name = "Employe.findByPrenom", query = "SELECT e FROM Employe e WHERE e.prenom = :prenom")

@@ -5,6 +5,7 @@
  */
 package com.modele;
 
+import com.utils.EmployesConstantes;
 import java.util.Collection;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -23,24 +24,21 @@ public class EmployeSB {
 
     public Collection<Employe> getEmployes() {
 
-        // Exécution d'une requête équivalente à un select *  
-        //Query q = em.createQuery("select e from Employe e");
-        //return q.getResultList();
         Query findAllQuery = em.createNamedQuery("recupererTousLesEmployes");
         return findAllQuery.getResultList();
-
     }
 
     public void supprimerEmploye(String id) {
 
         int idEmp = Integer.parseInt(id);
-        Query q = em.createQuery("delete from Employe e where e.id = :emplId");
+        Query q = em.createQuery(EmployesConstantes.REQUETE_SUPPRIMER);
         q.setParameter("emplId", idEmp);
         q.executeUpdate();
 
     }
 
     public boolean ajouterEmploye(Employe empl) {
+        // le boolean envoie un message conditionnel
         boolean test = false;
         Employe employe = new Employe();
 
@@ -53,8 +51,10 @@ public class EmployeSB {
         employe.setTelport(empl.getTelport());
         employe.setTelpro(empl.getTelpro());
         employe.setVille(empl.getVille());
-        if (empl.getNom().length() < 25 && empl.getPrenom().length() < 25 && empl.getAdresse().length() < 100 && empl.getCodepostal().length() < 15 && empl.getEmail().length() < 35 && empl.getTeldom().length() < 15 && empl.getTelport().length() < 15 && empl.getTelpro().length() < 15 && empl.getVille().length() < 25 &&
-               ( !empl.getNom().equals("") ||!empl.getPrenom().equals("") || !empl.getEmail().equals(("")) )) {
+
+        // filtres pour renseigner les champs sur la taille et empeche d'enregistrer sans nom, prénom ou adresse
+        if (empl.getNom().length() < 25 && empl.getPrenom().length() < 25 && empl.getAdresse().length() < 100 && empl.getCodepostal().length() < 15 && empl.getEmail().length() < 35 && empl.getTeldom().length() < 15 && empl.getTelport().length() < 15 && empl.getTelpro().length() < 15 && empl.getVille().length() < 25
+                && (!empl.getNom().equals("") || !empl.getPrenom().equals("") || !empl.getEmail().equals(("")))) {
             test = true;
             this.persist(employe);
 
@@ -148,12 +148,11 @@ public class EmployeSB {
         employe.setVille(empl.getVille());
 
         this.persist(employe);
-
     }
 
     public Employe getEmployeParId(int id) {
 
-        Query findById = em.createQuery("SELECT e FROM Employe e WHERE e.id = :idEmp");
+        Query findById = em.createQuery(EmployesConstantes.REQUETE_DETAILS);
         findById.setParameter("idEmp", id);
         Employe empl = (Employe) findById.getSingleResult();
         return empl;
@@ -161,10 +160,6 @@ public class EmployeSB {
     }
 
     public Collection<Identifiants> getIdentifiants() {
-
-        // Exécution d'une requête équivalente à un select *  
-        //Query q = em.createQuery("select e from Employe e");
-        //return q.getResultList();
         Query findAllQuery = em.createNamedQuery("recupererLesIdentifiants");
         return findAllQuery.getResultList();
 

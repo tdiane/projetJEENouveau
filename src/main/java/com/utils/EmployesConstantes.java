@@ -2,17 +2,10 @@ package com.utils;
 
 public final class EmployesConstantes {
 
-    //Constantes liées au fichier properties
-//    public static final String CHEMIN_FICHIER_PROPERTIES = "com/employes/utils/db.properties";
-//    public static final String DB_URL = "dbUrl";
-//    public static final String DB_USER = "dbUser";
-//    public static final String DB_PWD = "dbPwd";
-    //Requêtes SQL
-//    public static final String SQL_DELETE_EMPLOYES = "DELETE FROM EMPLOYES WHERE ID=";
-//    public static final String SQL_SELECT_EMPLOYES_ID = "SELECT * FROM EMPLOYES WHERE ID=";
-//    public static final String SQL_SELECT_TOUS_EMPLOYES = "SELECT * FROM EMPLOYES";
-//    public static final String SQL_SELECT_IDENTIFIANTS = "SELECT * from IDENTIFIANTS";
-    //Constantes lié aux actions / submit
+    // requete JPQL
+    public static final String REQUETE_SUPPRIMER = "delete from Employe e where e.id = :emplId";
+    public static final String REQUETE_DETAILS = "SELECT e FROM Employe e WHERE e.id = :idEmp";
+
     public static final String ACTION = "action";
     public static final String ACTION_SUPPRIMER = "Supprimer";
     public static final String ACTION_DETAILS = "Details";
@@ -48,12 +41,12 @@ public final class EmployesConstantes {
     public static final String ERREUR_AUCUNE_LIGNE_SELECT = "Vous n'avez sélectionné aucun employé!";
     public static final String ERREUR_AUCUN_EMPLOYE = "L'entreprise doit recruter !";
     public static final String SUCCES_AJOUTER = "Un employé a été ajouté avec succès";
-    public static final String ERREUR_AJOUTER = "l'ajout n'a pas fonctionné. Merci de verifier les informations saisies.";
+    public static final String ERREUR_AJOUTER = "L'ajout n'a pas fonctionné. Merci de verifier les informations saisies.";
+    public static final String SUCCES_MODIFIER = "Un employé a été modifié avec succès";
+    public static final String ERREUR_MODIFIER = "La modification n'est pas possible. Merci de verifier les informations saisies.";
 
     //URL des pages jsp
     public static final String PAGE_INDEX = "/WEB-INF/Vue/index.jsp";
-//    public static final String PAGE_CONTROLEUR = "controleur.jsp";
-//    public static final String PAGE_CONTROLEUR_TABLEAU = "controleurTableauEmployes.jsp";
     public static final String PAGE_TOUS_LES_EMPLOYES = "/WEB-INF/Vue/tableauEmployes.jsp";
     public static final String PAGE_DETAIL_EMPLOYE = "/WEB-INF/Vue/detailsEmploye.jsp";
     public static final String PAGE_AJOUT_EMPLOYE = "/WEB-INF/Vue/ajoutEmploye.jsp";

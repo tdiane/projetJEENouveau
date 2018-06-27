@@ -10,8 +10,6 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-        <% //<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script> %>
-        <% //<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>%>
     </head>
     <body>
 
@@ -55,17 +53,6 @@
                     </table>
 
 
-                    <c:if test="${!empty CLE_TEST_SUPPRIMER_SUCCES}">
-                        <font color="green">${CLE_TEST_SUPPRIMER_SUCCES}</font> 
-                        <br>
-                    </c:if>
-
-
-                    <c:if test="${!empty CLE_TEST_SUPPRIMER_ECHEC}">
-                        <font color="red">${CLE_TEST_SUPPRIMER_ECHEC}</font> 
-                        <br>
-                    </c:if>
-
 
 
                     <c:if test="${!empty cleListeEmployes}">
@@ -80,11 +67,12 @@
                         <br>
                         <input type="submit" name="action" value="Créer 5 Employés" class="btn btn-primary"/>
                     </c:if>
-                        
+
                     <input type="submit" name="action" value="Ajouter" class="btn btn-primary"/>
 
                     <br/><font color="${couleur}"> ${message_ajouter}</font>
                     <br/><font color="${couleur}"> ${message_details}</font>
+                    <br/><font color="${couleur_supp}"> ${message_supprimer}</font>
 
                 </form>
             </div>

@@ -20,22 +20,9 @@ import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author Jacques
  */
 public class Controleur extends HttpServlet {
 
-    // Suite à la migration vers JPA plus besoin de ces attributs
-//    private String dbUrl;
-//    private String dbUser;
-//    private String dbPwd;
-//    private InputStream input;
-//    private Properties prop;
-//    private ClassLoader classLoader;
-//    private static Connection conn;
-//    IdentifiantsBean userBean;
-//    ResultSet rs;
-//    EmployesPersistance employeBD = new EmployesPersistance();
-//    IdentifiantsPersistance utilisateurBD = new IdentifiantsPersistance();
     ArrayList<Employe> listeEmployes;
     ArrayList<Identifiants> listeCredentials;
     Employe employe;
@@ -68,6 +55,7 @@ public class Controleur extends HttpServlet {
         String action = request.getParameter(EmployesConstantes.ACTION);
         listeEmployes = new ArrayList<>();
         listeCredentials = new ArrayList<>();
+        boolean test;
 
         if (action == null) {
             request.getRequestDispatcher(EmployesConstantes.PAGE_INDEX).forward(request, response);
@@ -82,35 +70,15 @@ public class Controleur extends HttpServlet {
                             request.setAttribute("cleMessageErreur", EmployesConstantes.ERREUR_SAISIE_VIDE);
                             request.getRequestDispatcher(EmployesConstantes.PAGE_INDEX).forward(request, response);
                         } else {
-//                            try {
-                            //Récupération des utilisateurs
-//                                rs = utilisateurBD.getIdentifiantss();
-//                                //Récupération du login et du mot de passe
-//                                while (rs.next()) {
-//                                    userBean.setLogin(rs.getString("LOGIN"));
-//                                    userBean.setMdp(rs.getString("MDP"));
-//                                }
-//                            } catch (SQLException ex) {
-//                                System.out.println(ex.getMessage());
-//                            }
                             listeCredentials.clear();
                             listeCredentials.addAll(emEmploye.getIdentifiants());
 
                             for (int i = 0; i < listeCredentials.size(); i++) {
                                 ArrayList<Identifiants> userBase = listeCredentials;
-                                //                            for (Identifiants userBase : listeCredentials) {
-                                //Si le login et le mot de passe entrées correspondent aux login et mot
-                                //de passe présents en base, créer un utilisateur et l'envoyer
-                                //vers la page de tableauEmployes.
+
                                 if (userBase.get(i).getLogin().equals(loginForm) && userBase.get(i).getMdp().equals(mdpForm)) {
                                     request.setAttribute("cleLoginForm", loginForm);
                                     request.getRequestDispatcher(EmployesConstantes.PAGE_BIENVENUE).forward(request, response);
-                                    //listeEmployes = employeBD.getListeEmployes();
-//                                    listeEmployes.clear();
-//                                    listeEmployes.addAll(emEmploye.getEmployes());
-//                                    //request.setAttribute("cleListeEmployes", listeEmployes);
-//                                    request.setAttribute("cleListeEmployes", listeEmployes);
-//                                    request.getRequestDispatcher(EmployesConstantes.PAGE_TOUS_LES_EMPLOYES).forward(request, response);
 
                                 } //Sinon envoyer vers la page d'accueil avec un message d'erreur.
                             }
@@ -123,30 +91,29 @@ public class Controleur extends HttpServlet {
 
                 case EmployesConstantes.ACTION_SUPPRIMER:
                     if (request.getParameter(idEmploye) != null) {
-                        //int idClientASupprimer = Integer.parseInt(request.getParameter(idEmploye));
-
                         emEmploye.supprimerEmploye(request.getParameter(idEmploye));
-
-                        //employeBD.supprimerEmployeParId(idClientASupprimer);
-                        //listeEmployes = employeBD.getListeEmployes();
                         listeEmployes.clear();
                         listeEmployes.addAll(emEmploye.getEmployes());
+
+                        //envoie un message de succès supprimer de couleur verte
                         request.setAttribute("cleListeEmployes", listeEmployes);
-                        request.setAttribute("CLE_TEST_SUPPRIMER_SUCCES", EmployesConstantes.SUCCES_SUPPR);
+                        request.setAttribute("couleur_supp", "green");
+                        request.setAttribute("message_supprimer", EmployesConstantes.SUCCES_SUPPR);
                         request.getRequestDispatcher(EmployesConstantes.PAGE_TOUS_LES_EMPLOYES).forward(request, response);
                     } else {
 
+                        //envoie un message de echec supprimer de couleur rouge
                         listeEmployes.clear();
                         listeEmployes.addAll(emEmploye.getEmployes());
                         request.setAttribute("cleListeEmployes", listeEmployes);
-                        request.setAttribute("CLE_TEST_SUPPRIMER_ECHEC", EmployesConstantes.ERREUR_SUPPR);
+                        request.setAttribute("couleur_supp", "red");
+                        request.setAttribute("message_supprimer", EmployesConstantes.ERREUR_SUPPR);
                         request.getRequestDispatcher(EmployesConstantes.PAGE_TOUS_LES_EMPLOYES).forward(request, response);
                     }
                     break;
 
                 case EmployesConstantes.ACTION_MODIFIER:
 
-                    //employe = (EmployeBean) session.getAttribute("employe");
                     int idEmp = (Integer) session.getAttribute("idEmp");
 
                     employe = new Employe(idEmp,
@@ -160,32 +127,30 @@ public class Controleur extends HttpServlet {
                             request.getParameter(EmployesConstantes.CHAMP_VILLE),
                             request.getParameter(EmployesConstantes.CHAMP_EMAIL));
 
-                    //employeBD.modifierEmploye(employe);
                     emEmploye.modifierEmploye(employe);
 
-                    //listeEmployes = employeBD.getListeEmployes();
                     listeEmployes.clear();
                     listeEmployes.addAll(emEmploye.getEmployes());
                     request.setAttribute("cleListeEmployes", listeEmployes);
-
+                    request.setAttribute("message_modifier", EmployesConstantes.SUCCES_MODIFIER);
+                    request.setAttribute("couleur_modifier", "green");
                     session.setAttribute("employe", employe);
+
                     request.getRequestDispatcher(EmployesConstantes.PAGE_DETAIL_EMPLOYE).forward(request, response);
 
-//                    request.getRequestDispatcher(EmployesConstantes.PAGE_TOUS_LES_EMPLOYES).forward(request, response);
                     break;
-//                    
 
                 case EmployesConstantes.ACTION_DETAILS:
+                    // afficher les details si un radio bouton est selectionné
                     if (request.getParameter(idEmploye) != null) {
                         int idEmployeSelect = Integer.parseInt(request.getParameter(idEmploye));
                         session.setAttribute("idEmp", idEmployeSelect);
                         employe = emEmploye.getEmployeParId(idEmployeSelect);
-
                         session.setAttribute("employe", employe);
                         request.getRequestDispatcher(EmployesConstantes.PAGE_DETAIL_EMPLOYE).forward(request, response);
 
                     } else {
-
+                        // si aucun radio bouton n'est selectionné message d'erreur en rouge
                         listeEmployes.clear();
                         listeEmployes.addAll(emEmploye.getEmployes());
                         request.setAttribute("cleListeEmployes", listeEmployes);
@@ -196,7 +161,6 @@ public class Controleur extends HttpServlet {
                     break;
 
                 case EmployesConstantes.ACTION_VOIR_LISTE:
-                    // listeEmployes = employeBD.getListeEmployes();
                     listeEmployes.clear();
                     listeEmployes.addAll(emEmploye.getEmployes());
                     request.setAttribute("cleListeEmployes", listeEmployes);
@@ -204,11 +168,12 @@ public class Controleur extends HttpServlet {
                     break;
 
                 case EmployesConstantes.ACTION_AJOUTER:
+                    // renvoie vers une page "blanche" pour ajouter un employé
                     request.getRequestDispatcher(EmployesConstantes.PAGE_AJOUT_EMPLOYE).forward(request, response);
                     break;
 
                 case EmployesConstantes.ACTION_ADD_EMPLOYE:
-
+                    // récupère les champs pour ajouter un employé en base
                     employe = new Employe(
                             request.getParameter(EmployesConstantes.CHAMP_NOM),
                             request.getParameter(EmployesConstantes.CHAMP_PRENOM),
@@ -220,7 +185,7 @@ public class Controleur extends HttpServlet {
                             request.getParameter(EmployesConstantes.CHAMP_VILLE),
                             request.getParameter(EmployesConstantes.CHAMP_EMAIL));
 
-                    boolean test = emEmploye.ajouterEmploye(employe);
+                    test = emEmploye.ajouterEmploye(employe);
 
                     if (test) {
                         listeEmployes.clear();
@@ -230,6 +195,7 @@ public class Controleur extends HttpServlet {
                         request.setAttribute("couleur", "green");
                         request.getRequestDispatcher(EmployesConstantes.PAGE_TOUS_LES_EMPLOYES).forward(request, response);
                     } else {
+                        // si aucune info n'est entrée envoie un message d'erreur
                         request.setAttribute("message_ajouter", EmployesConstantes.ERREUR_AJOUTER);
                     }
                     request.setAttribute("couleur", "red");
